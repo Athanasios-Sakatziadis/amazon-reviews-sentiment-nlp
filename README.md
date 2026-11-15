@@ -1,3 +1,6 @@
+
+
+
 # Sentiment Classification of Amazon Mobile Reviews: Logistic Regression vs. XGBoost
 
 
@@ -79,13 +82,29 @@ Both models were evaluated on the unseen test set using Precision, Recall, F1-Sc
 *Distribution of binary sentiment labels after deduplication and removal of neutral 3-star reviews (~105k positive vs. ~45k negative).*
 
 
+<img width="569" height="391" alt="Screenshot 2026-11-15 182054" src="https://github.com/user-attachments/assets/0d2f0bc7-c309-4881-b72d-08c725817133" />
+
+
 ### 2. Model Training Execution Time (Computational Efficiency)
 *Benchmarking training speed on high-dimensional TF-IDF matrices: Logistic Regression completed in **1.16s** compared to **80.25s** for XGBoost.*
+
+
+<img width="1143" height="128" alt="Screenshot 2026-11-15 182245" src="https://github.com/user-attachments/assets/ab103653-b40b-410e-9cf6-8c751cdb8ce8" />
+
+
 
 
 ### 3. ROC Curve Comparison (Logistic Regression vs. XGBoost)
 *Visualizing classification performance across thresholds: Logistic Regression achieved an AUC of **0.98**, slightly outperforming XGBoost (**0.97**).*
 
 
+<img width="680" height="547" alt="Screenshot 2026-11-15 182110" src="https://github.com/user-attachments/assets/77ab5d99-872b-4d55-974d-9a38489d5e96" />
+
+
 ### 4. Feature Importance & Model Explainability (Top 10 N-Grams)
 *Extracting Logistic Regression coefficient weights to highlight the strongest positive and negative unigrams/bigrams (e.g., "no problems", "not happy", "return").*
+
+
+<img width="1091" height="447" alt="Screenshot 2026-11-15 182126" src="https://github.com/user-attachments/assets/73b08085-d445-49f6-99e5-626ef3d933d7" />
+
+
