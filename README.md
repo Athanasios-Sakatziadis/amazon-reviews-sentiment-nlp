@@ -73,15 +73,27 @@ The results indicate that Logistic Regression achieved stronger overall performa
 ## Screenshots & Visual Results
 
 ### 1. Target Class Distribution
-![Target Class Distribution](images/class_distribution.png)
+
+
+<img width="569" height="391" alt="class_distribution" src="https://github.com/user-attachments/assets/5552a41c-0950-4876-a1a4-118220bbbb40" />
+
 
 ### 2. Model Training Execution Time
-![Training Time](images/training_time.png)
+
+
+<img width="1143" height="128" alt="training_time" src="https://github.com/user-attachments/assets/6de2c5ad-fe6b-4275-8a43-94171035c72d" />
+
 
 ### 3. ROC Curve Comparison 
-![ROC Curve](images/roc_curve.png)
+
+
+<img width="680" height="547" alt="roc_curve" src="https://github.com/user-attachments/assets/602a6792-0099-4788-89f3-5433c6f82537" />
+
 
 ### 4. Feature Importance & Model Explainability
-![Feature Importance](images/feature_importance.png)
+
+
+<img width="1091" height="447" alt="feature_importance" src="https://github.com/user-attachments/assets/9cb2095c-b220-45f1-a61e-003a2d80f75b" />
+
 
 ---
