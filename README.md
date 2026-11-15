@@ -1,91 +1,87 @@
 # Sentiment Classification of Amazon Mobile Reviews: Logistic Regression vs. XGBoost
 
-
-An end-to-end Natural Language Processing (NLP) and Machine Learning project designed to classify customer sentiment from over 400,000 Amazon unlocked mobile phone reviews. The workflow emphasizes rigorous data cleaning to prevent data leakage, TF-IDF feature extraction with n-grams, a performance showdown between linear and tree-based classifiers, and model explainability.
-
-> **Academic Context:** This project was developed as an optimization assignment for the **Web and Text Analytics** course at the **University of Macedonia** (supervised by **Prof. Evangelos Kalampokis**). The objective was to take the baseline `.ipynb` solution presented in class and significantly improve its methodology, robustness, and analytical depth.
-
-**Dataset Source:** [Amazon Unlocked Mobile Reviews (Kaggle)](https://www.kaggle.com/datasets/nehasontakke/amazon-unlocked-mobilecsv)
-
----
-
 ## Project Overview
+This project explores the application of Natural Language Processing (NLP) and Machine Learning techniques to sentiment classification using more than 400,000 Amazon mobile phone reviews. 
 
+The objective is to classify customer reviews as either positive or negative, using review text and star ratings. The project compares two classification algorithms — **Logistic Regression** and **XGBoost** — and examines their predictive performance, computational efficiency, and interpretability.
 
-In e-commerce, automatically understanding customer feedback at scale is critical for product improvement and customer retention. This project transforms raw, unstructured customer reviews into actionable insights by framing the problem as a binary classification task:
-* **Positive Sentiment (`1`):** Ratings of 4 and 5 stars.
-* **Negative Sentiment (`0`):** Ratings of 1 and 2 stars.
-*(Neutral 3-star reviews were excluded to eliminate sentiment ambiguity).*
+> **Academic Context:** The work was developed as an optimization of a baseline solution presented in the **Web and Text Analytics** course at the **University of Macedonia**, under the supervision of **Professor Evangelos Kalampokis**. The original approach was extended through additional preprocessing, improved evaluation, model comparison, and feature analysis.
 
----
-
-## Key Improvements Over the Class Baseline
-
-
-* **Data Leakage Prevention:** Identified and removed over 60% duplicate `(review, rating)` pairs *prior* to the train-test split to ensure unbiased evaluation and prevent artificially inflated metrics.
-* **Algorithmic Showdown (Linear vs. Tree-Based):** Expanded beyond the baseline Logistic Regression model by introducing an **XGBoost Classifier** to benchmark how gradient-boosted trees perform against linear models on high-dimensional sparse text data.
-* **Advanced Evaluation (ROC-AUC):** Supplemented standard accuracy metrics with comparative **ROC Curves** and **AUC scores** for a deeper assessment of class separation.
-* **Model Explainability:** Added feature weight extraction and visualization to interpret the top positive and negative n-grams driving the model's predictions.
+**Dataset:** The analysis uses the [Amazon Unlocked Mobile Reviews](https://www.kaggle.com/datasets/nehasontakke/amazon-unlocked-mobilecsv) dataset.
 
 ---
 
-## Methodology & Pipeline
+## Target Variable
+The original five-star rating system was transformed into a binary sentiment classification problem:
+* **Positive (1):** Ratings of 4 or 5 stars.
+* **Negative (0):** Ratings of 1 or 2 stars.
+*(Neutral 3-star reviews were excluded from the analysis).*
 
-
-1. **Data Cleaning & Leakage Prevention:**
-   * Handled missing values in the primary text feature (`reviews`).
-   * **Deduplication:** Discovered that over 60% of the raw dataset (413,840 rows) consisted of duplicate `(review, rating)` pairs. Removing these prior to splitting prevented **data leakage** between the training and test sets and eliminated frequency bias in text vectorization.
-
-
-2. **Feature Engineering (TF-IDF):**
-   * Converted raw text into numerical sparse matrices using `TfidfVectorizer`.
-   * Configured `min_df=5` to filter out rare noise/typos and `ngram_range=(1, 2)` to capture both single words (**unigrams**) and two-word context (**bigrams**, e.g., *"not happy"*, *"no problems"*).
-   * Fitted the vocabulary **exclusively on the training set** (75/25 split) before transforming the test set.
-
-
-3. **Model Showdown (Linear vs. Tree-Based):**
-   * Trained and compared **Logistic Regression** (well-suited for high-dimensional sparse text matrices) against **XGBoost** (gradient boosted decision trees).
-
-
-4. **Model Explainability:**
-   * Extracted and visualized the top positive and negative model coefficients to interpret which specific words and phrases drive customer satisfaction or dissatisfaction.
+This approach focuses the classification task on clearly positive and negative customer opinions.
 
 ---
 
-## Model Evaluation & Results
+## Key Improvements Over Baseline
+Compared with the baseline implementation, this project introduces several improvements:
+* **Duplicate removal:** Duplicate `(review, rating)` pairs were removed before the train-test split, reducing the risk of duplicate observations appearing in both datasets and influencing evaluation results.
+* **Expanded model comparison:** XGBoost was introduced alongside Logistic Regression to compare a linear model with a gradient-boosting approach.
+* **Improved evaluation:** ROC curves and ROC-AUC scores were included to provide an additional perspective on classification performance.
+* **Feature analysis:** Model coefficients were examined to identify words and phrases associated with positive and negative sentiment.
+* **Computational efficiency:** Training times were recorded to compare the computational cost of the two approaches.
 
+---
 
-Both models were evaluated on the unseen test set using Precision, Recall, F1-Score, and the Area Under the ROC Curve (ROC-AUC).
+## Methodology
 
+### 1. Data Cleaning and Preprocessing
+More than 60% of the original records were identified as duplicate `(review, rating)` pairs. These duplicates were removed before splitting the data into training and testing sets. After cleaning and removing neutral ratings, the final dataset contained approximately 149,343 reviews (104,819 Positive, 44,524 Negative).
 
-| Model | Accuracy | Precision (Class 1) | Recall (Class 1) | F1-Score | ROC-AUC Score | Training Time |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Logistic Regression** | `[e.g., 95%]` | `[e.g., 0.96]` | `[e.g., 0.97]` | `[e.g., 0.97]` | **`[e.g., 0.9850]`** | `[e.g., 4.2s]` |
-| **XGBoost Classifier** | `[e.g., 93%]` | `[e.g., 0.94]` | `[e.g., 0.96]` | `[e.g., 0.95]` | `[e.g., 0.9720]` | `[e.g., 45.0s]` |
+### 2. Train-Test Split
+The cleaned dataset was divided into **75% training data** and **25% testing data**. The split was performed *after* duplicate removal to reduce the risk of overly optimistic evaluation caused by data leakage.
 
-### Key Takeaways
+### 3. Text Vectorization (TF-IDF)
+The review text was transformed into numerical features using `TfidfVectorizer` configured with:
+* `min_df = 5`
+* `ngram_range = (1, 2)` (capturing both **unigrams** and **bigrams** like *"not happy"*).
+The TF-IDF vocabulary was fitted exclusively on the training data.
 
+### 4. Model Training & Evaluation
+Trained and compared **Logistic Regression** (linear benchmark) against **XGBoost** (gradient boosting). Models were evaluated using Accuracy, Precision, Recall, F1-score, ROC-AUC, and Training time.
 
-* **Logistic Regression Outperforms on Sparse Text:** Logistic Regression achieved a higher ROC-AUC score while training significantly faster than XGBoost, demonstrating why linear models remain a strong benchmark for high-dimensional bag-of-words/TF-IDF representations.
+---
 
+## Results and Model Comparison
 
-* **Context Matters (Bigrams):** Feature importance analysis confirmed that capturing bigrams allowed the model to accurately weigh negation phrases like *"not happy"* (strong negative driver) and *"no problems"* (strong positive driver), alongside domain-specific e-commerce terms like *"return"*.
+The results indicate that Logistic Regression achieved stronger overall performance in this experiment while requiring substantially less training time than XGBoost.
+
+| Metric | Logistic Regression | XGBoost |
+| :--- | :---: | :---: |
+| **Accuracy** | ~94% | ~92% |
+| **ROC-AUC Score** | **0.9793** | 0.9673 |
+| **Negative-class F1-score** | ~0.89 | ~0.85 |
+| **Positive-class F1-score** | ~0.96 | ~0.94 |
+| **Training Time** | **1.16 sec** | 80.25 sec |
+
+### Key Findings
+* **Logistic Regression achieved the stronger results:** It obtained a higher ROC-AUC score and better classification performance across both sentiment classes.
+* **Training efficiency:** Logistic Regression completed training in approximately 1.16 seconds, compared with 80.25 seconds for XGBoost.
+* **Text representation matters:** Using unigrams and bigrams allows the model to represent multi-word expressions, including negation phrases, rather than relying exclusively on individual words.
+* **Interpretable features:** The coefficient analysis highlights terms associated with positive and negative customer sentiment, including domain-specific expressions such as *"return"*.
 
 ---
 
 ## Screenshots & Visual Results
 
-### 1. Target Class Distribution (Exploratory Data Analysis)
-*Distribution of binary sentiment labels after deduplication and removal of neutral 3-star reviews (~105k positive vs. ~45k negative).*
+### 1. Target Class Distribution
+![Target Class Distribution](images/class_distribution.png)
 
+### 2. Model Training Execution Time
+![Training Time](images/training_time.png)
 
-### 2. Model Training Execution Time (Computational Efficiency)
-*Benchmarking training speed on high-dimensional TF-IDF matrices: Logistic Regression completed in **1.16s** compared to **80.25s** for XGBoost.*
+### 3. ROC Curve Comparison 
+![ROC Curve](images/roc_curve.png)
 
+### 4. Feature Importance & Model Explainability
+![Feature Importance](images/feature_importance.png)
 
-### 3. ROC Curve Comparison (Logistic Regression vs. XGBoost)
-*Visualizing classification performance across thresholds: Logistic Regression achieved an AUC of **0.98**, slightly outperforming XGBoost (**0.97**).*
-
-
-### 4. Feature Importance & Model Explainability (Top 10 N-Grams)
-*Extracting Logistic Regression coefficient weights to highlight the strongest positive and negative unigrams/bigrams (e.g., "no problems", "not happy", "return").*
+---
