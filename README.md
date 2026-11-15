@@ -1,4 +1,4 @@
-# E-Commerce Sentiment Analysis: Amazon Mobile Reviews
+# Sentiment Classification of Amazon Mobile Reviews: Logistic Regression vs. XGBoost
 
 
 An end-to-end Natural Language Processing (NLP) and Machine Learning project designed to classify customer sentiment from over 400,000 Amazon unlocked mobile phone reviews. The workflow emphasizes rigorous data cleaning to prevent data leakage, TF-IDF feature extraction with n-grams, a performance showdown between linear and tree-based classifiers, and model explainability.
