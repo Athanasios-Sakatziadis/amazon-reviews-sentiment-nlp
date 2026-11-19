@@ -3,7 +3,7 @@
 ## Project Overview
 This project explores the application of Natural Language Processing (NLP) and Machine Learning techniques to sentiment classification using more than 400,000 Amazon mobile phone reviews. 
 
-The objective is to classify customer reviews as either positive or negative, using review text and star ratings. The project compares two classification algorithms — **Logistic Regression** and **XGBoost** — and examines their predictive performance, computational efficiency, and interpretability.
+The objective is to classify customer reviews as either positive or negative, using review text and star ratings. The project compares two classification algorithms **Logistic Regression** and **XGBoost** and examines their predictive performance, computational efficiency, and interpretability.
 
 > **Academic Context:** The work was developed as an optimization of a baseline solution presented in the **Web and Text Analytics** course at the **University of Macedonia**, under the supervision of **Professor Evangelos Kalampokis**. The original approach was extended through additional preprocessing, improved evaluation, model comparison, and feature analysis.
 
